@@ -1,0 +1,576 @@
+set cut_paste_input [stack 0]
+version 6.3 v8
+BackdropNode {
+ inputs 0
+ name BackdropNode11
+ tile_color 0x8e8e3800
+ label GI
+ note_font_size 42
+ selected true
+ xpos -7778
+ ypos 2896
+ bdwidth 205
+ bdheight 605
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode12
+ tile_color 0x8e8e3800
+ label REFRACTION
+ note_font_size 42
+ selected true
+ xpos -6173
+ ypos 2896
+ bdwidth 222
+ bdheight 557
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode13
+ tile_color 0x8e8e3800
+ label REFLECTION
+ note_font_size 42
+ selected true
+ xpos -5674
+ ypos 2893
+ bdwidth 222
+ bdheight 552
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode14
+ tile_color 0x8e8e3800
+ label "DIFFUSE \n"
+ note_font_size 42
+ selected true
+ xpos -7242
+ ypos 2896
+ bdheight 313
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode15
+ tile_color 0x7171c600
+ label LIGHTING
+ note_font_size 42
+ selected true
+ xpos -6960
+ ypos 2896
+ bdwidth 610
+ bdheight 634
+}
+push $cut_paste_input
+Unpremult {
+ channels all
+ name Unpremult3
+ selected true
+ xpos -4505
+ ypos 2545
+}
+Dot {
+ name Dot39
+ selected true
+ xpos -4471
+ ypos 2659
+}
+set N4081c3a0 [stack 0]
+NoOp {
+ name BEAUTY3
+ selected true
+ xpos -4505
+ ypos 3050
+}
+push $N4081c3a0
+Dot {
+ name Dot40
+ selected true
+ xpos -4844
+ ypos 2659
+}
+set N4081ca00 [stack 0]
+add_layer {SSS SSS.red SSS.green SSS.blue SSS.alpha}
+Shuffle {
+ in SSS
+ out rgb
+ name Shuffle30
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -4878
+ ypos 3014
+}
+NoOp {
+ name SSS2
+ selected true
+ xpos -4878
+ ypos 3050
+}
+push $N4081ca00
+Dot {
+ name Dot41
+ selected true
+ xpos -5212
+ ypos 2659
+}
+set N4081d390 [stack 0]
+add_layer {specular specular.red specular.green specular.blue specular.alpha}
+Shuffle {
+ in {specular.red specular.green specular.blue -specular.alpha}
+ out rgb
+ name Shuffle31
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -5246
+ ypos 3014
+}
+NoOp {
+ name SPEC3
+ selected true
+ xpos -5246
+ ypos 3050
+}
+push $N4081d390
+Dot {
+ name Dot42
+ selected true
+ xpos -5510
+ ypos 2659
+}
+set N4081dd20 [stack 0]
+add_layer {reflectFilter reflectFilter.red reflectFilter.green reflectFilter.blue reflectFilter.alpha}
+Shuffle {
+ in {reflectFilter.red reflectFilter.green reflectFilter.blue -reflectFilter.alpha}
+ out rgb
+ name Shuffle32
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -5544
+ ypos 3014
+}
+NoOp {
+ name REFL_FILTER3
+ selected true
+ xpos -5544
+ ypos 3050
+}
+Dot {
+ name Dot43
+ selected true
+ xpos -5510
+ ypos 3231
+}
+set N4081e6b0 [stack 0]
+Dot {
+ name Dot44
+ selected true
+ xpos -5510
+ ypos 3328
+}
+push $N4081dd20
+Dot {
+ name Dot45
+ selected true
+ xpos -5632
+ ypos 2659
+}
+set N4081ed10 [stack 0]
+add_layer {reflect reflect.red reflect.green reflect.blue reflect.alpha}
+Shuffle {
+ in {reflect.red reflect.green reflect.blue -reflect.alpha}
+ out rgb
+ name Shuffle33
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -5666
+ ypos 3014
+}
+NoOp {
+ name REFL3
+ selected true
+ xpos -5666
+ ypos 3050
+}
+push $N4081e6b0
+Merge2 {
+ inputs 2
+ operation divide
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge31
+ selected true
+ xpos -5666
+ ypos 3228
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge34
+ selected true
+ xpos -5666
+ ypos 3325
+}
+push $N4081ed10
+Dot {
+ name Dot46
+ selected true
+ xpos -6009
+ ypos 2662
+}
+set N40820030 [stack 0]
+add_layer {refractFilter refractFilter.red refractFilter.green refractFilter.blue refractFilter.alpha}
+Shuffle {
+ in {refractFilter.red refractFilter.green refractFilter.blue -refractFilter.alpha}
+ out rgb
+ name Shuffle34
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -6043
+ ypos 3017
+}
+NoOp {
+ name REFRA_FILTER3
+ selected true
+ xpos -6043
+ ypos 3053
+}
+Dot {
+ name Dot47
+ selected true
+ xpos -6009
+ ypos 3332
+}
+set N408209c0 [stack 0]
+Dot {
+ name Dot51
+ selected true
+ xpos -6009
+ ypos 3429
+}
+push $N40820030
+Dot {
+ name Dot52
+ selected true
+ xpos -6131
+ ypos 2662
+}
+set N40821020 [stack 0]
+add_layer {refract refract.red refract.green refract.blue refract.alpha}
+Shuffle {
+ in {refract.red refract.green refract.blue -refract.alpha}
+ out rgb
+ name Shuffle35
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -6165
+ ypos 3017
+}
+NoOp {
+ name REFRACT3
+ selected true
+ xpos -6165
+ ypos 3053
+}
+push $N408209c0
+Merge2 {
+ inputs 2
+ operation divide
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge42
+ selected true
+ xpos -6165
+ ypos 3329
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge43
+ selected true
+ xpos -6165
+ ypos 3426
+}
+push $N40821020
+Dot {
+ name Dot53
+ selected true
+ xpos -6541
+ ypos 2662
+}
+set N40822010 [stack 0]
+Dot {
+ name Dot54
+ selected true
+ xpos -6728
+ ypos 2662
+}
+set N40822340 [stack 0]
+Dot {
+ name Dot55
+ selected true
+ xpos -7200
+ ypos 2662
+}
+set N40822670 [stack 0]
+add_layer {diffuse diffuse.red diffuse.green diffuse.blue diffuse.alpha}
+Shuffle {
+ in {diffuse.red diffuse.green diffuse.blue -diffuse.alpha}
+ out rgb
+ name Shuffle36
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -7234
+ ypos 3017
+}
+NoOp {
+ name FIFFUSE_FILTER3
+ selected true
+ xpos -7234
+ ypos 3053
+}
+Dot {
+ name Dot56
+ selected true
+ xpos -7200
+ ypos 3110
+}
+set N40823000 [stack 0]
+Dot {
+ name Dot57
+ selected true
+ xpos -7200
+ ypos 3286
+}
+set N40823330 [stack 0]
+push $N40822340
+add_layer {lighting lighting.red lighting.green lighting.blue lighting.alpha}
+Shuffle {
+ in {lighting.red lighting.green lighting.blue -lighting.alpha}
+ out rgb
+ name Shuffle37
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -6762
+ ypos 3017
+}
+set N40823660 [stack 0]
+NoOp {
+ name RAW_LIGHTING3
+ selected true
+ xpos -6924
+ ypos 3053
+}
+push $N40823000
+Merge2 {
+ inputs 2
+ operation divide
+ name Merge44
+ selected true
+ xpos -6924
+ ypos 3107
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge45
+ selected true
+ xpos -6924
+ ypos 3283
+}
+push $N40822010
+add_layer {shadow shadow.red shadow.green shadow.blue shadow.alpha}
+Shuffle {
+ in {shadow.red shadow.green shadow.blue -shadow.alpha}
+ out rgb
+ name Shuffle38
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -6575
+ ypos 3017
+}
+NoOp {
+ name SHADOW3
+ selected true
+ xpos -6575
+ ypos 3053
+}
+Dot {
+ name Dot58
+ selected true
+ xpos -6541
+ ypos 3114
+}
+push $N40823660
+NoOp {
+ name LIGHTING3
+ selected true
+ xpos -6762
+ ypos 3053
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ mix 0
+ name Merge46
+ label "Shadow Correct\nDefault = Mix 0"
+ selected true
+ xpos -6762
+ ypos 3097
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch5
+ label either/or
+ selected true
+ xpos -6762
+ ypos 3277
+}
+push $N40822670
+Dot {
+ name Dot59
+ selected true
+ xpos -7631
+ ypos 2662
+}
+add_layer {GI GI.red GI.green GI.blue GI.alpha}
+Shuffle {
+ in {GI.red GI.green GI.blue -GI.alpha}
+ out rgb
+ name Shuffle39
+ label "\[value in] to \[value out]"
+ selected true
+ xpos -7665
+ ypos 2999
+}
+set N40825640 [stack 0]
+NoOp {
+ name GI3
+ selected true
+ xpos -7665
+ ypos 3052
+}
+push $N40823330
+push $N40825640
+NoOp {
+ name RAW_GI3
+ selected true
+ xpos -7524
+ ypos 3052
+}
+push $N40823000
+Merge2 {
+ inputs 2
+ operation divide
+ name Merge47
+ selected true
+ xpos -7524
+ ypos 3107
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge48
+ selected true
+ xpos -7524
+ ypos 3283
+}
+Switch {
+ inputs 2
+ which 1
+ name Switch6
+ label either/or
+ selected true
+ xpos -7665
+ ypos 3277
+}
+Dot {
+ name Dot60
+ selected true
+ xpos -7631
+ ypos 3736
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge49
+ selected true
+ xpos -6762
+ ypos 3733
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge50
+ selected true
+ xpos -6165
+ ypos 3726
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge51
+ selected true
+ xpos -5666
+ ypos 3726
+}
+Merge2 {
+ inputs 2
+ operation plus
+ Achannels rgb
+ Bchannels rgb
+ output rgb
+ name Merge52
+ selected true
+ xpos -5246
+ ypos 3729
+}
+Merge2 {
+ inputs 2
+ operation plus
+ output rgb
+ name Merge53
+ selected true
+ xpos -4878
+ ypos 3729
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ channels depth
+ name Copy5
+ selected true
+ xpos -4505
+ ypos 3717
+}
+Premult {
+ name Premult2
+ selected true
+ xpos -4505
+ ypos 3827
+}

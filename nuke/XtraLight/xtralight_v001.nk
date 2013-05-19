@@ -1,0 +1,785 @@
+#! /Applications/Nuke7.0v6/NukeX7.0v6.app/../Nuke7.0v6.app/Contents/MacOS/Nuke7.0v6 -nx
+version 7.0 v6
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1200" fullscreen="1" screen="0">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="46"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1164"/>
+                <splitter orientation="2">
+                    <split size="702"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                        <page id="Viewer.3"/>
+                        <page id="Viewer.2"/>
+                    </dock>
+                    <split size="494"/>
+                    <dock id="" activePageId="DAG.2">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="DAG.3"/>
+                        <page id="DAG.2"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/jonas/Desktop/xtralight.nk
+ frame 1001
+ first_frame 1001
+ last_frame 1044
+ lock_range true
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Card2 {
+ inputs 0
+ translate {0 0 -1.5}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ xpos -163
+ ypos -248
+}
+Project3D {
+ inputs 0
+ project_on front
+ name Project3D1
+ xpos -464
+ ypos -329
+}
+Constant {
+ inputs 0
+ channels rgb
+ name Constant1
+ xpos -627
+ ypos -212
+}
+Group {
+ name UV_Generator2
+ xpos -627
+ ypos -44
+ addUserKnob {20 UV_Generator l User}
+ addUserKnob {41 format l Format T Reformat2.format}
+ addUserKnob {41 out l Output T ShuffleCopy1.out}
+ addUserKnob {26 ""}
+ addUserKnob {26 cc l "" +STARTLINE T "2013 by jonas@mischlicht.com"}
+ addUserKnob {41 format_1 l "output format" T Reformat1.format}
+}
+ Reformat {
+  inputs 0
+  type "to box"
+  box_width {{In.width}}
+  box_height {{In.height}}
+  box_fixed true
+  name Reformat2
+  xpos 101
+  ypos 53
+ }
+ Expression {
+  expr0 ((x+0.5)/In.bbox.w)
+  expr1 ((y+0.5)/In.bbox.h)
+  name Expression1
+  xpos 101
+  ypos 116
+ }
+set N8ea61350 [stack 0]
+ Input {
+  inputs 0
+  name In
+  xpos 2
+  ypos -19
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue black
+  out rgb
+  name ShuffleCopy1
+  xpos 2
+  ypos 206
+ }
+ Output {
+  name Output1
+  xpos 2
+  ypos 287
+ }
+push $N8ea61350
+ Viewer {
+  input_process false
+  name Viewer1
+  selected true
+  xpos 2
+  ypos 230
+ }
+end_group
+Camera2 {
+ inputs 0
+ translate {{curve x1001 0 x1008 -11.50200272 x1020 -17.41726875 -10.06685638 0.01643393934} {curve x1001 0 x1008 0 x1020 0 0 0} {curve x1001 1.620000005 x1008 -6.28802824 x1020 -12.27373314 -19.23570442 -23.63725471}}
+ rotate {{curve x1001 0 x1008 0 x1020 0 0 0 x1045 0} {curve x1001 0 x1008 -72.56135476 x1020 -93.84049493 -134.78056 -178.7566783 x1045 179.0527534} {curve x1001 0 x1008 0 x1020 0 0 0 x1045 0}}
+ name Camera1
+ xpos -164
+ ypos -166
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ xpos -63
+ ypos -383
+}
+Grade {
+ white 0.06
+ multiply 0.3
+ name Grade1
+ xpos -63
+ ypos -243
+}
+Sphere {
+ translate {0.1199999973 0 -4}
+ name Sphere1
+ xpos -63
+ ypos -199
+}
+push 0
+add_layer {position position.x position.y position.z}
+add_layer {normal normal.red normal.green normal.blue}
+ScanlineRender {
+ inputs 3
+ antialiasing high
+ motion_vectors_type distance
+ output_shader_vectors true
+ P_channel position
+ N_channel normal
+ name ScanlineRender1
+ xpos -63
+ ypos -52
+}
+Group {
+ name XtraLight
+ xpos -63
+ ypos 53
+ addUserKnob {20 xtraLight l XtraLight}
+ addUserKnob {41 in l Normals T Shuffle2.in}
+ addUserKnob {4 out l Output M {"Light Only" "Add (Light premult by rgb)" Add Screen "" ""}}
+ out "Add (Light premult by rgb)"
+ addUserKnob {20 gPos l Position n 1}
+ addUserKnob {7 LightX l x R -2 2}
+ LightX 0.44
+ addUserKnob {7 LightY l y R -2 2}
+ LightY 0.38
+ addUserKnob {7 LightZ l z R -2 2}
+ LightZ 0.57
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 gLight l Light n 1}
+ addUserKnob {18 int l Intensity R 0 100}
+ int {40 20 10}
+ addUserKnob {7 falloff l Falloff R 0 2}
+ falloff 0.5
+ addUserKnob {7 diameter l Diameter R 0 2}
+ diameter 1.2
+ addUserKnob {7 ambient l Ambient}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 gAd l "Advanced Settings" n 1}
+ gAd 0
+ addUserKnob {7 preadd l "Pre Add"}
+ preadd 0.001
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 t1 l "" +STARTLINE T "v0.1 2013 by joans@mischlicht.com"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos -142
+  ypos -247
+ }
+ Dot {
+  name Dot8
+  xpos -108
+  ypos -201
+ }
+set N42c52e70 [stack 0]
+ Shuffle {
+  in normal
+  in2 alpha
+  alpha red2
+  out rgb
+  name Shuffle2
+  xpos -142
+  ypos -133
+ }
+ Expression {
+  temp_name0 LX
+  temp_expr0 parent.LightX
+  temp_name1 LY
+  temp_expr1 parent.LightY
+  temp_name2 LZ
+  temp_expr2 parent.LightZ
+  channel0 none
+  expr0 r
+  channel1 none
+  expr1 g
+  channel2 none
+  expr2 b
+  expr3 sqrt((pow((LX-r),2))+(pow((LY-g),2))+(pow((LZ-b),2)))
+  name Expression2
+  xpos -142
+  ypos -47
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  label (all)
+  xpos -142
+  ypos -23
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -142
+  ypos 23
+ }
+ Grade {
+  blackpoint {{-(parent.diameter-1)}}
+  gamma {{parent.falloff}}
+  name Grade1
+  xpos -142
+  ypos 62
+ }
+ Grade {
+  multiply {{pow(parent.int,2)} {pow(parent.int,2)} {pow(parent.int,2)} {curve}}
+  name Grade2
+  xpos -142
+  ypos 97
+ }
+ Dot {
+  name Dot16
+  xpos -108
+  ypos 180
+ }
+set N5c58fcc0 [stack 0]
+ Expression {
+  expr0 r/(parent.int*4)
+  expr1 g/(parent.int*4)
+  expr2 b/(parent.int*4)
+  name Expression1
+  xpos -142
+  ypos 227
+ }
+set N8e928f70 [stack 0]
+ Dot {
+  name Dot14
+  xpos 644
+  ypos 230
+ }
+set N8e94ead0 [stack 0]
+ Dot {
+  name Dot12
+  xpos 878
+  ypos 230
+ }
+ Dot {
+  name Dot21
+  xpos 878
+  ypos 740
+ }
+push $N42c52e70
+ Dot {
+  name Dot9
+  xpos 198
+  ypos -201
+ }
+ Dot {
+  name Dot1
+  xpos 198
+  ypos 324
+ }
+set N263a59b0 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos 164
+  ypos 387
+ }
+ Dot {
+  name Dot2
+  xpos 198
+  ypos 440
+ }
+set N1b3f3aa0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 321
+  ypos 440
+ }
+set N5c56f8f0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 567
+  ypos 440
+ }
+set N1b0eed00 [stack 0]
+ Dot {
+  name Dot10
+  xpos 802
+  ypos 440
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge2
+  xpos 768
+  ypos 737
+ }
+ Premult {
+  name Premult3
+  xpos 768
+  ypos 761
+ }
+ Dot {
+  name Dot4
+  xpos 802
+  ypos 925
+ }
+push $N8e94ead0
+ Dot {
+  name Dot20
+  xpos 644
+  ypos 727
+ }
+push $N1b0eed00
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos 533
+  ypos 724
+ }
+ Premult {
+  name Premult2
+  xpos 533
+  ypos 760
+ }
+ Dot {
+  name Dot5
+  xpos 567
+  ypos 933
+ }
+push $N5c58fcc0
+ Dot {
+  name Dot17
+  xpos 455
+  ypos 180
+ }
+ Dot {
+  name Dot18
+  xpos 455
+  ypos 590
+ }
+push $N5c56f8f0
+ Grade {
+  multiply 0.185
+  name Grade3
+  selected true
+  xpos 287
+  ypos 479
+ }
+ Add {
+  value {{parent.preadd}}
+  name Add1
+  xpos 287
+  ypos 513
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge4
+  xpos 287
+  ypos 587
+ }
+ Add {
+  value {{sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)}}
+  mix {{parent.ambient/100}}
+  name Add2
+  xpos 287
+  ypos 631
+ }
+ Dot {
+  name Dot19
+  xpos 321
+  ypos 711
+ }
+push $N1b3f3aa0
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge5
+  xpos 170
+  ypos 708
+ }
+ Premult {
+  name Premult1
+  xpos 170
+  ypos 752
+ }
+push $N263a59b0
+push $N8e928f70
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply2
+  xpos -142
+  ypos 316
+ }
+ Dot {
+  name Dot7
+  xpos -108
+  ypos 913
+ }
+ Switch {
+  inputs 4
+  which {{parent.out}}
+  name Switch1
+  xpos 374
+  ypos 1121
+ }
+ Output {
+  name Output1
+  xpos 374
+  ypos 1166
+ }
+end_group
+Group {
+ name XtraLight2
+ xpos -63
+ ypos 87
+ addUserKnob {20 xtraLight l XtraLight}
+ addUserKnob {41 in l Normals T Shuffle2.in}
+ addUserKnob {4 out l Output M {"Light Only" "Add (Light premult by rgb)" Add Screen "" ""}}
+ out "Add (Light premult by rgb)"
+ addUserKnob {20 gPos l Position n 1}
+ addUserKnob {7 LightX l x R -2 2}
+ LightX -1.16
+ addUserKnob {7 LightY l y R -2 2}
+ LightY -0.89
+ addUserKnob {7 LightZ l z R -2 2}
+ LightZ 0.51
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 gLight l Light n 1}
+ addUserKnob {18 int l Intensity R 0 100}
+ int {13 20 40}
+ addUserKnob {7 falloff l Falloff R 0 2}
+ falloff 0.285
+ addUserKnob {7 diameter l Diameter R 0 2}
+ diameter 1.2
+ addUserKnob {7 ambient l Ambient}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 gAd l "Advanced Settings" n 1}
+ gAd 0
+ addUserKnob {7 preadd l "Pre Add"}
+ preadd 0.001
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 t1 l "" +STARTLINE T "v0.1 2013 by joans@mischlicht.com"}
+}
+ Input {
+  inputs 0
+  name img
+  xpos -142
+  ypos -247
+ }
+ Dot {
+  name Dot8
+  xpos -108
+  ypos -201
+ }
+set N5f6058a0 [stack 0]
+ Shuffle {
+  in normal
+  in2 alpha
+  alpha red2
+  out rgb
+  name Shuffle2
+  xpos -142
+  ypos -133
+ }
+ Expression {
+  temp_name0 LX
+  temp_expr0 parent.LightX
+  temp_name1 LY
+  temp_expr1 parent.LightY
+  temp_name2 LZ
+  temp_expr2 parent.LightZ
+  channel0 none
+  expr0 r
+  channel1 none
+  expr1 g
+  channel2 none
+  expr2 b
+  expr3 sqrt((pow((LX-r),2))+(pow((LY-g),2))+(pow((LZ-b),2)))
+  name Expression2
+  xpos -142
+  ypos -47
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  label (all)
+  xpos -142
+  ypos -23
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -142
+  ypos 23
+ }
+ Grade {
+  blackpoint {{-(parent.diameter-1)}}
+  gamma {{parent.falloff}}
+  name Grade1
+  xpos -142
+  ypos 62
+ }
+ Grade {
+  multiply {{pow(parent.int,2)} {pow(parent.int,2)} {pow(parent.int,2)} {curve}}
+  name Grade2
+  xpos -142
+  ypos 97
+ }
+ Dot {
+  name Dot16
+  xpos -108
+  ypos 180
+ }
+set N3a271180 [stack 0]
+ Expression {
+  expr0 r/(parent.int*4)
+  expr1 g/(parent.int*4)
+  expr2 b/(parent.int*4)
+  name Expression1
+  xpos -142
+  ypos 227
+ }
+set N3a28a570 [stack 0]
+ Dot {
+  name Dot14
+  xpos 644
+  ypos 230
+ }
+set N3a26e4a0 [stack 0]
+ Dot {
+  name Dot12
+  xpos 878
+  ypos 230
+ }
+ Dot {
+  name Dot21
+  xpos 878
+  ypos 740
+ }
+push $N5f6058a0
+ Dot {
+  name Dot9
+  xpos 198
+  ypos -201
+ }
+ Dot {
+  name Dot1
+  xpos 198
+  ypos 324
+ }
+set N8ea2fcd0 [stack 0]
+ Unpremult {
+  name Unpremult1
+  xpos 164
+  ypos 387
+ }
+ Dot {
+  name Dot2
+  xpos 198
+  ypos 440
+ }
+set N3a20fb60 [stack 0]
+ Dot {
+  name Dot15
+  xpos 321
+  ypos 440
+ }
+set N3a2ac700 [stack 0]
+ Dot {
+  name Dot13
+  xpos 567
+  ypos 440
+ }
+set N3a237fc0 [stack 0]
+ Dot {
+  name Dot10
+  xpos 802
+  ypos 440
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge2
+  xpos 768
+  ypos 737
+ }
+ Premult {
+  name Premult3
+  xpos 768
+  ypos 761
+ }
+ Dot {
+  name Dot4
+  xpos 802
+  ypos 925
+ }
+push $N3a26e4a0
+ Dot {
+  name Dot20
+  xpos 644
+  ypos 727
+ }
+push $N3a237fc0
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge1
+  xpos 533
+  ypos 724
+ }
+ Premult {
+  name Premult2
+  xpos 533
+  ypos 760
+ }
+ Dot {
+  name Dot5
+  xpos 567
+  ypos 933
+ }
+push $N3a271180
+ Dot {
+  name Dot17
+  xpos 455
+  ypos 180
+ }
+ Dot {
+  name Dot18
+  xpos 455
+  ypos 590
+ }
+push $N3a2ac700
+ Add {
+  value {{parent.preadd}}
+  name Add1
+  xpos 287
+  ypos 513
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge4
+  xpos 287
+  ypos 587
+ }
+ Add {
+  value {{sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)} {sqrt(parent.Grade2.multiply)}}
+  mix {{parent.ambient/100}}
+  name Add2
+  xpos 287
+  ypos 631
+ }
+ Dot {
+  name Dot19
+  xpos 321
+  ypos 711
+ }
+push $N3a20fb60
+ Merge2 {
+  inputs 2
+  operation plus
+  output {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge5
+  xpos 170
+  ypos 708
+ }
+ Premult {
+  name Premult1
+  xpos 170
+  ypos 752
+ }
+push $N8ea2fcd0
+push $N3a28a570
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply2
+  xpos -142
+  ypos 316
+ }
+ Dot {
+  name Dot7
+  xpos -108
+  ypos 913
+ }
+ Switch {
+  inputs 4
+  which {{parent.out}}
+  name Switch1
+  selected true
+  xpos 374
+  ypos 1121
+ }
+ Output {
+  name Output1
+  xpos 374
+  ypos 1166
+ }
+end_group
+Viewer {
+ frame 1001
+ frame_range 1001-1044
+ frame_range_lock true
+ input_process false
+ name Viewer1
+ selected true
+ xpos -627
+ ypos 76
+}

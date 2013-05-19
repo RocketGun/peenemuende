@@ -1,0 +1,1326 @@
+#! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
+version 6.3 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1920" h="968" screen="0">
+        <splitter orientation="1">
+            <split size="1361"/>
+            <splitter orientation="1">
+                <split size="1317"/>
+                <splitter orientation="2">
+                    <split size="442"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                        <page id="Viewer.2"/>
+                    </dock>
+                    <split size="500"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="DAG.9"/>
+                    </dock>
+                </splitter>
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+            </splitter>
+            <split size="555"/>
+            <splitter orientation="2">
+                <split size="669"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                    <page id="Script Editor.1"/>
+                </dock>
+                <split size="273"/>
+                <dock id="" activePageId="Progress.1">
+                    <page id="Progress.1"/>
+                    <page id="Error Console.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/justus/Desktop/nuke_rnd/Icons/setup/general.nk
+ project_directory "\[python \{nuke.script_directory()\}]"
+ format "256 256 0 0 256 256 1 icon_worksize"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file "/Users/justus/Desktop/Bildschirmfoto 2012-07-07 um 20.57.42.png"
+ format "1920 1080 0 0 1920 1080 1 HD"
+ origset true
+ name Read1
+ xpos 801
+ ypos -450
+}
+Crop {
+ box {1329 798.2999878 1351.619995 820.7999878}
+ reformat true
+ crop false
+ name Crop1
+ xpos 801
+ ypos -368
+}
+Reformat {
+ name Reformat1
+ xpos 801
+ ypos -344
+}
+Group {
+ inputs 0
+ name Group1
+ knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == 'output':\n    subKnobs = \{\n    'Linear':\['angle'],\n    'Concentric':\['aspect'],\n    'Clock':\['fields', 'start'],\n    'Angle':\['fields2'],\n    'Spiral':\['slices', 'rotation'],\n    'Blinds':\['align', 'fields3'],\n    'Curtains':\[],\n    'Streaks': \['align2', 'fields_streaks'],\n    'Bulls Eye': \['fields_bull'],\n    'Random': \['fields_rnd', 'seed']\n    \}\n\n    for skList in subKnobs.itervalues():\n        for sk in skList:\n            n\[sk].setVisible( sk in subKnobs\[k.value()] )\n                \n\n"
+ xpos 220
+ ypos -294
+ cached true
+ postage_stamp true
+ addUserKnob {20 User}
+ addUserKnob {41 format T Constant1.format}
+ addUserKnob {26 ""}
+ addUserKnob {7 wipe R 0 2}
+ wipe 0.505
+ addUserKnob {6 flip -STARTLINE}
+ addUserKnob {6 flop -STARTLINE}
+ addUserKnob {7 feather}
+ addUserKnob {7 falloff R 0 2}
+ falloff 1
+ addUserKnob {26 ""}
+ addUserKnob {4 output -STARTLINE M {Linear Concentric Clock Angle Spiral Curtains Blinds Streaks "Bulls Eye" Random ""}}
+ output Spiral
+ addUserKnob {7 angle +HIDDEN R 0 360}
+ angle 45
+ addUserKnob {7 aspect +HIDDEN R 0.5 2}
+ aspect 1
+ addUserKnob {3 fields +HIDDEN}
+ fields 2
+ addUserKnob {7 start +HIDDEN}
+ addUserKnob {3 fields2 l fields +HIDDEN}
+ fields2 4
+ addUserKnob {7 slices l pitch R 0 10}
+ slices 5
+ addUserKnob {7 rotation}
+ addUserKnob {4 align l "" -STARTLINE +HIDDEN M {vertical horizontal}}
+ align horizontal
+ addUserKnob {3 fields3 l fileds +HIDDEN}
+ fields3 4
+ addUserKnob {4 align2 l align +HIDDEN M {vertical horizontal}}
+ align2 horizontal
+ addUserKnob {3 fields_streaks l fields +HIDDEN}
+ fields_streaks 7
+ addUserKnob {3 fields_bull l fields +HIDDEN}
+ fields_bull 7
+ addUserKnob {3 fields_rnd l fields +HIDDEN}
+ fields_rnd 10
+ addUserKnob {3 seed +HIDDEN}
+ seed 999999
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  selected true
+  xpos 93
+  ypos -505
+ }
+set N1d81b370 [stack 0]
+ Expression {
+  temp_name0 xStripes
+  temp_expr0 " random(floor(x/width*parent.fields_rnd)/(parent.fields_rnd-1)*77,parent.seed)"
+  temp_name1 yStripes
+  temp_expr1 " random(floor(y/width*parent.fields_rnd)/(parent.fields_rnd-1)*77,parent.seed)"
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 (xStripes*yStripes)
+  expr1 (xStripes*yStripes)
+  expr2 (xStripes*yStripes)
+  expr3 (xStripes*yStripes)
+  name Random
+  xpos 859
+  ypos -309
+ }
+set N20532a70 [stack 0]
+push $N20532a70
+push $N20532a70
+ Dilate {
+  size {{width}}
+  name Dilate1
+  xpos 992
+  ypos -316
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 992
+  ypos -238
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge1
+  xpos 859
+  ypos -238
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade10
+  xpos 859
+  ypos -200
+ }
+push $N1d81b370
+ Expression {
+  temp_name1 D
+  temp_expr1 sqrt(pow(2*(x-width/2)/width,2)+pow(2*(y-height/2)/width,2))
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 "D%(1/(parent.fields_bull-1)) * (parent.fields_bull-1)"
+  expr1 "D%(1/(parent.fields_bull-1)) * (parent.fields_bull-1)"
+  expr2 "D%(1/(parent.fields_bull-1)) * (parent.fields_bull-1)"
+  expr3 "D%(1/(parent.fields_bull-1)) * (parent.fields_bull-1)"
+  name BullsEye
+  xpos 732
+  ypos -272
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade9
+  xpos 732
+  ypos -234
+ }
+push $N1d81b370
+ Expression {
+  temp_name0 fieldH
+  temp_expr0 rint((cos(pi/2+x*pi*parent.fields_streaks/width)+1)/2)
+  temp_name1 fieldW
+  temp_expr1 rint((cos(pi/2+y*pi*parent.fields_streaks/height)+1)/2)
+  temp_name2 field
+  temp_expr2 parent.align2?fieldW:fieldH
+  temp_name3 grad
+  temp_expr3 parent.align2?x/width:y/height
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 abs(grad-field)
+  expr1 abs(grad-field)
+  expr2 abs(grad-field)
+  expr3 abs(grad-field)
+  name Streaks
+  xpos 599
+  ypos -277
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade8
+  xpos 599
+  ypos -239
+ }
+push $N1d81b370
+ Expression {
+  temp_name0 fieldW
+  temp_expr0 width/parent.fields3
+  temp_name1 fieldH
+  temp_expr1 height/parent.fields3
+  temp_name2 fieldsX
+  temp_expr2 (x%fieldW)/(fieldW-1)
+  temp_name3 fieldsY
+  temp_expr3 (y%fieldH)/(fieldH-1)
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 parent.align?fieldsY:fieldsX
+  expr1 parent.align?fieldsY:fieldsX
+  expr2 parent.align?fieldsY:fieldsX
+  expr3 parent.align?fieldsY:fieldsX
+  name Blinds
+  xpos 405
+  ypos -284
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade7
+  xpos 405
+  ypos -246
+ }
+push $N1d81b370
+ Expression {
+  temp_name1 Dx
+  temp_expr1 "(x-width/2) / (height/2) "
+  temp_name2 Dy
+  temp_expr2 "(y-height/2) / (height/2) * aspect"
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 parent.wipe==1?1:(abs(Dx)*abs(Dy))
+  expr1 parent.wipe==1?1:(abs(Dx)*abs(Dy))
+  expr2 parent.wipe==1?1:(abs(Dx)*abs(Dy))
+  expr3 parent.wipe==1?1:(abs(Dx)*abs(Dy))
+  name Curtains
+  label "\n"
+  xpos 256
+  ypos -288
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe*1.8}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade6
+  xpos 256
+  ypos -250
+ }
+push $N1d81b370
+ Expression {
+  temp_name0 dist
+  temp_expr0 sqrt(pow(x-width/2,2)+pow(y-height/2,2))
+  temp_name2 pos
+  temp_expr2 "(((((degrees(atan2((x-width/2),(y-height/2)))+180)/360) + ( dist / width * parent.slices )   )%1) + parent.rotation+1) % 1"
+  temp_name3 neg
+  temp_expr3 "((1-(((degrees(-atan2((x-width/2),(y-height/2)))+180)/360) + ( dist / width * -parent.slices )  )%1) + parent.rotation + 1) %1"
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 parent.slices<0?neg:pos
+  expr1 parent.slices<0?neg:pos
+  expr2 parent.slices<0?neg:pos
+  expr3 parent.slices<0?neg:pos
+  name Spiral
+  xpos 136
+  ypos -281
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade5
+  xpos 136
+  ypos -243
+ }
+push $N1d81b370
+ Expression {
+  temp_name0 angle
+  temp_expr0 (abs((atan2(x-width/2,y-height/2))))
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 parent.fields2==1?angle/pi:abs(sin(angle*(parent.fields2-1)))
+  expr1 parent.fields2==1?angle/pi:abs(sin(angle*(parent.fields2-1)))
+  expr2 parent.fields2==1?angle/pi:abs(sin(angle*(parent.fields2-1)))
+  expr3 parent.fields2==1?angle/pi:abs(sin(angle*(parent.fields2-1)))
+  name Angle
+  xpos -5
+  ypos -291
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade4
+  xpos -5
+  ypos -242
+ }
+push $N1d81b370
+ Expression {
+  temp_name0 fields
+  temp_expr0 360/parent.fields
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 "(((degrees(atan2(x-width/2,y-height/2))+180)%fields + parent.start*fields)%fields)"
+  expr1 "(((degrees(atan2(x-width/2,y-height/2))+180)%fields + parent.start*fields)%fields)"
+  expr2 "(((degrees(atan2(x-width/2,y-height/2))+180)%fields + parent.start*fields)%fields)"
+  expr3 "(((degrees(atan2(x-width/2,y-height/2))+180)%fields + parent.start*fields)%fields)"
+  name Clock
+  xpos -153
+  ypos -292
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe*360/parent.fields}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather*70}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade3
+  xpos -153
+  ypos -247
+ }
+push $N1d81b370
+ Expression {
+  temp_name1 Dx
+  temp_expr1 "(x-width/2) / (height/2)"
+  temp_name2 Dy
+  temp_expr2 "(y-height/2) / (height/2) * aspect"
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 1-sqrt(pow2(Dx)+pow2(Dy))
+  expr1 1-sqrt(pow2(Dx)+pow2(Dy))
+  expr2 1-sqrt(pow2(Dx)+pow2(Dy))
+  expr3 1-sqrt(pow2(Dx)+pow2(Dy))
+  name Concentric
+  label "\n"
+  xpos -295
+  ypos -294
+ }
+ Grade {
+  channels rgba
+  blackpoint {{1-parent.wipe*2.2*aspect}}
+  whitepoint {{this.blackpoint.r+parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade2
+  xpos -295
+  ypos -235
+ }
+push $N1d81b370
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 "(((x-(width/2))/width) * cos(radians(parent.angle)) + ((y-height/2)/width) * -sin(radians(parent.angle)))  / ((abs(cos(radians(parent.angle)) * width) + abs(sin(radians(parent.angle)) * height))/width)"
+  expr1 "(((x-(width/2))/width) * cos(radians(parent.angle)) + ((y-height/2)/width) * -sin(radians(parent.angle)))  / ((abs(cos(radians(parent.angle)) * width) + abs(sin(radians(parent.angle)) * height))/width)"
+  expr2 "(((x-(width/2))/width) * cos(radians(parent.angle)) + ((y-height/2)/width) * -sin(radians(parent.angle)))  / ((abs(cos(radians(parent.angle)) * width) + abs(sin(radians(parent.angle)) * height))/width)"
+  expr3 "(((x-(width/2))/width) * cos(radians(parent.angle)) + ((y-height/2)/width) * -sin(radians(parent.angle)))  / ((abs(cos(radians(parent.angle)) * width) + abs(sin(radians(parent.angle)) * height))/width)"
+  name Linear
+  xpos -461
+  ypos -297
+ }
+ Grade {
+  channels rgba
+  blackpoint {{parent.wipe-.5}}
+  whitepoint {{this.blackpoint.r-.00001-parent.feather}}
+  gamma {{parent.falloff}}
+  white_clamp true
+  name Grade1
+  xpos -461
+  ypos -242
+ }
+ Switch {
+  inputs 10
+  which {{parent.output}}
+  name Switch1
+  xpos 91
+  ypos -3
+ }
+ Mirror {
+  Horizontal {{parent.flop}}
+  Vertical {{parent.flip}}
+  name Mirror1
+  xpos 91
+  ypos 54
+ }
+ Output {
+  name Output1
+  xpos 91
+  ypos 92
+ }
+end_group
+Group {
+ name IconBuilder1
+ xpos 220
+ ypos -176
+ cached true
+ addUserKnob {20 User l IconBuilder}
+ addUserKnob {4 shape l Use M {Shape Image ""}}
+ addUserKnob {6 outline l Outline +STARTLINE}
+ outline true
+ addUserKnob {6 backdrop l Backdrop -STARTLINE}
+ backdrop true
+ addUserKnob {20 color l Color n 1}
+ addUserKnob {18 fcolor l Shape}
+ fcolor {0.400000006 0 0.400000006}
+ addUserKnob {18 ocolor l Outline}
+ ocolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {18 bcolor l Backdrop}
+ bcolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 c l "" +STARTLINE T "IconBuilder v0.1 by jonas@mischlicht.com"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.bcolor i} {parent.bcolor i} {parent.bcolor i} {parent.bcolor i}}
+  name Constant6
+  xpos 539
+  ypos -140
+ }
+ Dot {
+  name Dot1
+  xpos 573
+  ypos -58
+ }
+set N287fa790 [stack 0]
+ Crop {
+  box {21 21 235 235}
+  name Crop3
+  xpos 539
+  ypos -32
+ }
+ Input {
+  inputs 0
+  name In
+  xpos 1067
+  ypos -685
+ }
+ Dot {
+  name Dot5
+  xpos 1101
+  ypos -415
+ }
+set N287182f0 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1101
+  ypos -342
+ }
+push $N287182f0
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos 926
+  ypos -429
+ }
+ Ramp {
+  inputs 0
+  opacity 0.405
+  p0 {0 0}
+  p1 {0 256}
+  name Ramp2
+  xpos 926
+  ypos -460
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.fcolor i} {parent.fcolor i} {parent.fcolor i} {parent.fcolor i}}
+  name Constant4
+  xpos 816
+  ypos -559
+ }
+ Merge2 {
+  inputs 2
+  mix 0.16
+  name Merge4
+  xpos 816
+  ypos -460
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 816
+  ypos -423
+ }
+ Premult {
+  name Premult3
+  xpos 816
+  ypos -389
+ }
+ Switch {
+  inputs 2
+  which {{parent.shape i}}
+  name Switch1
+  xpos 816
+  ypos -345
+ }
+ Dot {
+  name Dot6
+  xpos 850
+  ypos -286
+ }
+set N2af26720 [stack 0]
+ Dot {
+  name Dot7
+  xpos 885
+  ypos -180
+ }
+push $N2af26720
+ EdgeDetectWrapper {
+  threshold 3.6
+  name EdgeDetectWrapper2
+  xpos 676
+  ypos -294
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos 676
+  ypos -260
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.ocolor i} {parent.ocolor i} {parent.ocolor i} {parent.ocolor i}}
+  name Constant1
+  xpos 541
+  ypos -230
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 676
+  ypos -211
+ }
+ Premult {
+  name Premult4
+  xpos 676
+  ypos -177
+ }
+push $N2af26720
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 786
+  ypos -177
+ }
+ Switch {
+  inputs 2
+  which {{!parent.outline i}}
+  name Switch2
+  xpos 816
+  ypos -135
+ }
+ Crop {
+  box {32 32 224 224}
+  name Crop4
+  xpos 816
+  ypos -111
+ }
+set N2af58fd0 [stack 0]
+push $N287fa790
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 714
+  ypos -61
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 714
+  ypos -37
+ }
+push $N2af58fd0
+ Switch {
+  inputs 2
+  which {{parent.backdrop}}
+  name Switch3
+  selected true
+  xpos 816
+  ypos -32
+ }
+set N2af6ef90 [stack 0]
+ Reformat {
+  format "24 24 0 0 24 24 1 icon"
+  name Reformat2
+  xpos 816
+  ypos 26
+ }
+ Output {
+  name Output1
+  xpos 816
+  ypos 176
+ }
+push $N2af6ef90
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 1086
+  ypos -113
+ }
+end_group
+Write {
+ channels rgba
+ file /Users/justus/Desktop/wipe.png
+ file_type png
+ checkHashOnRead false
+ version 3
+ name Write1
+ xpos 220
+ ypos -152
+ cached true
+}
+Roto {
+ inputs 0
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 128 S 0 128 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier2" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 156.862 S 1 1 161.385 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 42
+      0 S 1 1 0 S 1 1 0 0 0 S 1 1 90.6 S 1 1 68 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 101.699 S 1 1 101.401 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 150.5 S 1 1 173.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.399994 S 1 1 -0.799988 0 0 S 1 1 131.6 S 1 1 187.2 0 0 S 1 1 -0.399994 S 1 1 0.799988 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 144.4 S 1 1 204 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 161.5 S 1 1 193 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -0.399994 0 0 S 1 1 189.5 S 1 1 229 0 0 S 1 1 0 S 1 1 0.207993 0 0 S 1 1 -6.95685 S 1 1 4.20926 0 0 S 1 1 208.6 S 1 1 233.2 0 0 S 1 1 6.42172 S 1 1 -3.88547 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 212.5 S 1 1 214.5 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.399994 S 1 1 -0.399994 0 0 S 1 1 188 S 1 1 178.5 0 0 S 1 1 -0.399994 S 1 1 0.399994 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 202.4 S 1 1 166 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.800003 S 1 1 -0.399994 0 0 S 1 1 190.4 S 1 1 147.6 0 0 S 1 1 -0.800003 S 1 1 0.399994 0 0 S 1 1 0.400009 S 1 1 0 0 0 S 1 1 175 S 1 1 161.5 0 0 S 1 1 -0.400009 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 119.901 S 1 1 88.9992 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 42
+      0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.399994 S 1 1 -0.799988 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.399994 S 1 1 0.799988 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -0.399994 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0.207993 0 0 S 1 1 -6.95685 S 1 1 4.20926 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 6.42172 S 1 1 -3.88547 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.399994 S 1 1 -0.399994 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.399994 S 1 1 0.399994 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0.800003 S 1 1 -0.399994 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.800003 S 1 1 0.399994 0 0 S 1 1 0.400009 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -0.400009 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 128 "spy" S 0 128 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto2
+ xpos 836
+ ypos -253
+}
+set N2c73b570 [stack 0]
+push $N2c73b570
+FilterErode {
+ channels rgba
+ size -8
+ name FilterErode1
+ xpos 714
+ ypos -292
+}
+Invert {
+ name Invert1
+ xpos 683
+ ypos -246
+}
+Roto {
+ inputs 0
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 128 S 0 128 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 92.6667 S 1 1 79.6667 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 9
+      0 S 1 1 0 S 1 1 1 0 0 S 1 1 24 S 1 1 187 0 0 S 1 1 0 S 1 1 -1 0 0 S 1 1 -1 S 1 1 -1 0 0 S 1 1 24 S 1 1 25 0 0 S 1 1 1 S 1 1 1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 232 S 1 1 26 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 9
+      0 S 1 1 0 S 1 1 1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 -1 0 0 S 1 1 -1 S 1 1 -1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 1 S 1 1 1 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 0 S 1 1 0 0 
+     }
+     NumOfAttributes: 44
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 128 "spy" S 0 128 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ colorOverlay 0
+ lifetime_type "all frames"
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+ name Roto1
+ xpos 575
+ ypos -269
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge1
+ xpos 575
+ ypos -216
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ xpos 575
+ ypos -180
+}
+Group {
+ name IconBuilder2
+ xpos 575
+ ypos -131
+ addUserKnob {20 User l IconBuilder}
+ addUserKnob {4 shape l Use M {Shape Image ""}}
+ addUserKnob {6 outline l Outline +STARTLINE}
+ outline true
+ addUserKnob {6 backdrop l Backdrop -STARTLINE}
+ addUserKnob {20 color l Color n 1}
+ addUserKnob {18 fcolor l Shape}
+ fcolor {0.400000006 0 0.400000006}
+ addUserKnob {18 ocolor l Outline}
+ ocolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {18 bcolor l Backdrop}
+ bcolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 c l "" +STARTLINE T "IconBuilder v0.1 by jonas@mischlicht.com"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.bcolor i} {parent.bcolor i} {parent.bcolor i} {parent.bcolor i}}
+  name Constant6
+  xpos 539
+  ypos -140
+ }
+ Dot {
+  name Dot1
+  xpos 573
+  ypos -58
+ }
+set N2d96e1c0 [stack 0]
+ Crop {
+  box {21 21 235 235}
+  name Crop3
+  xpos 539
+  ypos -32
+ }
+ Input {
+  inputs 0
+  name In
+  xpos 1067
+  ypos -685
+ }
+ Dot {
+  name Dot5
+  xpos 1101
+  ypos -415
+ }
+set N2c05cc40 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1101
+  ypos -342
+ }
+push $N2c05cc40
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos 926
+  ypos -429
+ }
+ Ramp {
+  inputs 0
+  opacity 0.405
+  p0 {0 0}
+  p1 {0 256}
+  name Ramp2
+  xpos 926
+  ypos -460
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.fcolor i} {parent.fcolor i} {parent.fcolor i} {parent.fcolor i}}
+  name Constant4
+  xpos 816
+  ypos -559
+ }
+ Merge2 {
+  inputs 2
+  mix 0.16
+  name Merge4
+  xpos 816
+  ypos -460
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 816
+  ypos -423
+ }
+ Premult {
+  name Premult3
+  xpos 816
+  ypos -389
+ }
+ Switch {
+  inputs 2
+  which {{parent.shape i}}
+  name Switch1
+  xpos 816
+  ypos -345
+ }
+ Dot {
+  name Dot6
+  xpos 850
+  ypos -286
+ }
+set N2c0ac1e0 [stack 0]
+ Dot {
+  name Dot7
+  xpos 885
+  ypos -180
+ }
+push $N2c0ac1e0
+ EdgeDetectWrapper {
+  threshold 3.6
+  name EdgeDetectWrapper2
+  xpos 676
+  ypos -294
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos 676
+  ypos -260
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.ocolor i} {parent.ocolor i} {parent.ocolor i} {parent.ocolor i}}
+  name Constant1
+  xpos 541
+  ypos -230
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 676
+  ypos -211
+ }
+ Premult {
+  name Premult4
+  xpos 676
+  ypos -177
+ }
+push $N2c0ac1e0
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 786
+  ypos -177
+ }
+ Switch {
+  inputs 2
+  which {{!parent.outline i}}
+  name Switch2
+  xpos 816
+  ypos -135
+ }
+ Crop {
+  box {32 32 224 224}
+  name Crop4
+  xpos 816
+  ypos -111
+ }
+set N2d9a1a80 [stack 0]
+push $N2d96e1c0
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 714
+  ypos -61
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 714
+  ypos -37
+ }
+push $N2d9a1a80
+ Switch {
+  inputs 2
+  which {{parent.backdrop i}}
+  name Switch3
+  selected true
+  xpos 816
+  ypos -32
+ }
+set N2d9b7a40 [stack 0]
+ Reformat {
+  format "24 24 0 0 24 24 1 icon"
+  name Reformat2
+  xpos 816
+  ypos 26
+ }
+ Output {
+  name Output1
+  xpos 816
+  ypos 176
+ }
+push $N2d9b7a40
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 1086
+  ypos -113
+ }
+end_group
+Write {
+ channels rgba
+ file /Users/justus/Desktop/Keyer.png
+ file_type png
+ checkHashOnRead false
+ version 6
+ name Write3
+ xpos 575
+ ypos -107
+}
+Viewer {
+ inputs 2
+ input_process false
+ name Viewer1
+ xpos -350
+ ypos 396
+}
+Constant {
+ inputs 0
+ channels rgb
+ name Constant5
+ xpos 390
+ ypos -283
+}
+Radial {
+ area {32 32 224 224}
+ softness 0
+ name Radial1
+ xpos 390
+ ypos -211
+}
+Group {
+ name IconBuilder
+ xpos 390
+ ypos -187
+ addUserKnob {20 User l IconBuilder}
+ addUserKnob {4 shape l Use M {Shape Image ""}}
+ addUserKnob {6 outline l Outline +STARTLINE}
+ outline true
+ addUserKnob {6 backdrop l Backdrop -STARTLINE}
+ addUserKnob {20 color l Color n 1}
+ addUserKnob {18 fcolor l Shape}
+ fcolor {0.400000006 0 0.400000006}
+ addUserKnob {18 ocolor l Outline}
+ ocolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {18 bcolor l Backdrop}
+ bcolor {0.03189602867 0.03189602867 0.03189602867}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 c l "" +STARTLINE T "IconBuilder v0.1 by jonas@mischlicht.com"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.bcolor i} {parent.bcolor i} {parent.bcolor i} {parent.bcolor i}}
+  name Constant6
+  xpos 539
+  ypos -140
+ }
+ Dot {
+  name Dot1
+  xpos 573
+  ypos -58
+ }
+set N283646a0 [stack 0]
+ Crop {
+  box {21 21 235 235}
+  name Crop3
+  xpos 539
+  ypos -32
+ }
+ Input {
+  inputs 0
+  name In
+  xpos 1067
+  ypos -685
+ }
+ Dot {
+  name Dot5
+  xpos 1101
+  ypos -415
+ }
+set N28388aa0 [stack 0]
+ Dot {
+  name Dot2
+  xpos 1101
+  ypos -342
+ }
+push $N28388aa0
+ Expression {
+  channel0 {-rgba.red -rgba.green -rgba.blue}
+  expr0 0
+  channel1 {-rgba.red -rgba.green -rgba.blue}
+  expr1 0
+  channel2 {-rgba.red -rgba.green -rgba.blue}
+  expr2 0
+  channel3 {rgba.alpha none none rgba.alpha}
+  expr3 a==0?0:a
+  name AlphaError
+  label "To avid Gizmo being in state of\nerror without something plugged in input."
+  xpos 926
+  ypos -429
+ }
+ Ramp {
+  inputs 0
+  opacity 0.405
+  p0 {0 0}
+  p1 {0 256}
+  name Ramp2
+  xpos 926
+  ypos -460
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.fcolor i} {parent.fcolor i} {parent.fcolor i} {parent.fcolor i}}
+  name Constant4
+  xpos 816
+  ypos -559
+ }
+ Merge2 {
+  inputs 2
+  mix 0.16
+  name Merge4
+  xpos 816
+  ypos -460
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 816
+  ypos -423
+ }
+ Premult {
+  name Premult3
+  xpos 816
+  ypos -389
+ }
+ Switch {
+  inputs 2
+  which {{parent.shape i}}
+  name Switch1
+  xpos 816
+  ypos -345
+ }
+ Dot {
+  name Dot6
+  xpos 850
+  ypos -286
+ }
+set N275c63f0 [stack 0]
+ Dot {
+  name Dot7
+  xpos 885
+  ypos -180
+ }
+push $N275c63f0
+ EdgeDetectWrapper {
+  threshold 3.6
+  name EdgeDetectWrapper2
+  xpos 676
+  ypos -294
+ }
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos 676
+  ypos -260
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.ocolor i} {parent.ocolor i} {parent.ocolor i} {parent.ocolor i}}
+  name Constant1
+  xpos 541
+  ypos -230
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 676
+  ypos -211
+ }
+ Premult {
+  name Premult4
+  xpos 676
+  ypos -177
+ }
+push $N275c63f0
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos 786
+  ypos -177
+ }
+ Switch {
+  inputs 2
+  which {{!parent.outline i}}
+  name Switch2
+  xpos 816
+  ypos -135
+ }
+ Crop {
+  box {32 32 224 224}
+  name Crop4
+  xpos 816
+  ypos -111
+ }
+set N283eca30 [stack 0]
+push $N283646a0
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos 714
+  ypos -61
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 714
+  ypos -37
+ }
+push $N283eca30
+ Switch {
+  inputs 2
+  which {{parent.backdrop i}}
+  name Switch3
+  selected true
+  xpos 816
+  ypos -32
+ }
+set N293b7e40 [stack 0]
+ Reformat {
+  format "24 24 0 0 24 24 1 icon"
+  name Reformat2
+  xpos 816
+  ypos 26
+ }
+ Output {
+  name Output1
+  xpos 816
+  ypos 176
+ }
+push $N293b7e40
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 1086
+  ypos -113
+ }
+end_group
+Write {
+ channels rgba
+ file /Users/justus/Desktop/d503.png
+ file_type png
+ checkHashOnRead false
+ version 5
+ name Write2
+ xpos 390
+ ypos -163
+}

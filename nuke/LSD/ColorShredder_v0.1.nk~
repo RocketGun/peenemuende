@@ -1,0 +1,137 @@
+#! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
+version 6.3 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="23" w="1920" h="968" screen="0">
+        <splitter orientation="1">
+            <split size="1361"/>
+            <splitter orientation="1">
+                <split size="1317"/>
+                <splitter orientation="2">
+                    <split size="639"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="303"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="DAG.2"/>
+                    </dock>
+                </splitter>
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+            </splitter>
+            <split size="555"/>
+            <splitter orientation="2">
+                <split size="669"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                    <page id="Script Editor.1"/>
+                </dock>
+                <split size="273"/>
+                <dock id="" activePageId="Progress.1">
+                    <page id="Progress.1"/>
+                    <page id="Error Console.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Volumes/Stuff/Mischlicht/rnd/nuke/ColorShredder/ColorShredder_v0.1.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ addUserKnob {20 rvSettings_RVstart l RV}
+ addUserKnob {2 rvSettings_sessionDir l "Session Directory" t "Root directory of RV session data.  Should be unique to this Nuke script"}
+ rvSettings_sessionDir /var/tmp/nuke-u501/RvDir/
+ addUserKnob {4 rvSettings_outputFileFormat l "Render File Format" t "File format for renders, usual 'rgb' or 'exr'." M {rgb exr dpx jpg}}
+ addUserKnob {20 rvSettings_syncOptionsStart l "Sync Options" n 1}
+ addUserKnob {6 rvSettings_syncSelection l "Nuke Node Selection  ->  RV Current View" t "Sync RV current view to Nuke node selection." +STARTLINE}
+ rvSettings_syncSelection true
+ addUserKnob {6 rvSettings_syncFrameChange l "Nuke Frame  ->  RV Frame" t "Sync RV frame to Nuke's frame." +STARTLINE}
+ rvSettings_syncFrameChange true
+ addUserKnob {6 rvSettings_syncReadChanges l "Nuke Read/Write Node Changes  ->  RV Sources" t "Sync creation/deletion/modification of Read and Write nodes to corresponding sources in RV." +STARTLINE}
+ rvSettings_syncReadChanges true
+ addUserKnob {20 rvSettings_syncOptionsEnd l "Sync Options" n -1}
+}
+Read {
+ inputs 0
+ file /Users/justus/Desktop/105764291219341497_kpMr0O0l_b.jpg
+ format "192 289 0 0 192 289 1 "
+ origset true
+ name Read1
+ xpos 340
+ ypos -70
+}
+Ramp {
+ inputs 0
+ p0 {1012 -4}
+ p1 {1000 1540}
+ name Ramp1
+ xpos 180
+ ypos -54
+}
+Read {
+ inputs 0
+ file "/Volumes/Stuff/Mischlicht/reel/Projekte/PICTORION das werk/091009_ich_und_ich/sh020/sh020/Wueste_SH02.0000008.dpx"
+ format "1920 1080 0 0 1920 1080 1 HD"
+ origset true
+ timecode 10:01:07:13
+ name Read2
+ xpos 77
+ ypos -87
+}
+Group {
+ name ColorShredder
+ xpos 180
+ ypos 28
+ addUserKnob {20 ColorShredder}
+ addUserKnob {41 f l frequency T Expression1.f}
+ addUserKnob {26 x l "" +STARTLINE T "v0.1\n\nBei Fragen: jonas@mischlicht.com"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 521
+  ypos 12
+ }
+ Expression {
+  temp_name0 xa
+  temp_expr0 -2
+  temp_name1 xb
+  temp_expr1 -2
+  temp_name2 xc
+  temp_expr2 pi
+  temp_name3 xd
+  temp_expr3 pi
+  expr0 ((xd-xb)/pi)*asin(cos(pi*((r*f)-xc)/(xc-xa)))+((xd+xb)/2)
+  expr1 ((xd-xb)/pi)*asin(cos(pi*((g*f)-xc)/(xc-xa)))+((xd+xb)/2)
+  expr2 ((xd-xb)/pi)*asin(cos(pi*((b*f)-xc)/(xc-xa)))+((xd+xb)/2)
+  name Expression1
+  selected true
+  xpos 521
+  ypos 57
+  addUserKnob {20 User}
+  addUserKnob {7 f l frequency R 1 5000}
+  f 257
+ }
+ Output {
+  name Output1
+  xpos 521
+  ypos 152
+ }
+end_group
+Viewer {
+ frame 1
+ input_process false
+ name Viewer1
+ xpos 29
+ ypos 86
+}

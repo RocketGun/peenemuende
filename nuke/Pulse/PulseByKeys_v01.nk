@@ -1,0 +1,65 @@
+#! /Applications/Nuke7.0v6/NukeX7.0v6.app/../Nuke7.0v6.app/Contents/MacOS/Nuke7.0v6 -nx
+version 7.0 v6
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1680" h="1024" screen="0">
+        <splitter orientation="1">
+            <split size="1062"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1018"/>
+                <splitter orientation="2">
+                    <split size="586"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="412"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="614"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/jonas/Documents/Kontexte/peenemuende/nuke/Pulse/PulseByKeys_v01.nk
+ frame 33
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+NoOp {
+ inputs 0
+ name PulseByKeys
+ xpos -203
+ ypos -136
+ addUserKnob {20 User}
+ addUserKnob {7 keys}
+ keys {{curve x1 1 x3 1 x7 1 1}}
+ addUserKnob {7 length R 1 50}
+ length 10
+ addUserKnob {6 cut +STARTLINE}
+ cut true
+ addUserKnob {7 res}
+ res {{"\[python -execlocal import\\ nuke\\n\\n#\\ set\\ Settings\\nret\\ =\\ 0\\n\\nlength\\ =\\ nuke.thisNode().knob('length').value()\\n\\ncut\\ =\\ nuke.thisNode().knob('cut').value()\\n\\nk\\ =\\ nuke.thisNode().knob('keys')\\n\\n\\n#getKeys\\n\\nkeys\\ =\\ \\\[\\]\\n\\nif\\ k.isAnimated():\\n\\ \\ \\ \\ for\\ curve\\ in\\ k.animations():\\n\\ \\ \\ \\ \\ \\ \\ \\ for\\ key\\ in\\ curve.keys():\\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ distance\\ =\\ nuke.frame()-key.x\\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ if\\ (distance\\ >=\\ 0)\\ and\\ (distance\\ <=\\ length):\\n\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ keys.append(key)\\n\\n\\n#\\ Calc\\ Res\\n\\nfor\\ key\\ in\\ keys:\\n\\ \\ \\ \\ distance\\ =\\ ((key.x-nuke.frame())/length)+1\\n\\ \\ \\ \\ \\n\\ \\ \\ \\ \\n\\ \\ \\ \\ ret\\ =\\ distance*key.y]"}}
+ addUserKnob {26 debug}
+}
+Viewer {
+ frame 33
+ input_process false
+ name Viewer1
+ xpos 58
+ ypos 99
+}

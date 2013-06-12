@@ -2,29 +2,33 @@
 version 7.0 v6
 define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
 <layout version="1.0">
-    <window x="0" y="22" w="1680" h="1024" screen="0">
+    <window x="0" y="0" w="1920" h="1200" fullscreen="1" screen="0">
         <splitter orientation="1">
-            <split size="1062"/>
+            <split size="1214"/>
             <splitter orientation="1">
-                <split size="40"/>
+                <split size="46"/>
                 <dock id="" hideTitles="1" activePageId="Toolbar.1">
                     <page id="Toolbar.1"/>
                 </dock>
-                <split size="1018"/>
+                <split size="1164"/>
                 <splitter orientation="2">
-                    <split size="586"/>
+                    <split size="702"/>
                     <dock id="" activePageId="Viewer.1">
                         <page id="Viewer.1"/>
+                        <page id="Viewer.3"/>
+                        <page id="Viewer.2"/>
                     </dock>
-                    <split size="412"/>
-                    <dock id="" activePageId="DAG.1">
+                    <split size="494"/>
+                    <dock id="" activePageId="DAG.2">
                         <page id="DAG.1"/>
                         <page id="Curve Editor.1"/>
                         <page id="DopeSheet.1"/>
+                        <page id="DAG.3"/>
+                        <page id="DAG.2"/>
                     </dock>
                 </splitter>
             </splitter>
-            <split size="614"/>
+            <split size="702"/>
             <dock id="" activePageId="Properties.1">
                 <page id="Properties.1"/>
             </dock>
@@ -34,7 +38,7 @@ define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
 }
 Root {
  inputs 0
- name /Users/jonas/Documents/Kontexte/peenemuende/nuke/XtraLight/xtralight_v001.nk
+ name /Users/jonas/Desktop/xtralight.nk
  frame 1001
  first_frame 1001
  last_frame 1044
@@ -103,7 +107,7 @@ Group {
   xpos 101
   ypos 116
  }
-set N1cd59910 [stack 0]
+set N8ea61350 [stack 0]
  Input {
   inputs 0
   name In
@@ -125,7 +129,7 @@ set N1cd59910 [stack 0]
   xpos 2
   ypos 287
  }
-push $N1cd59910
+push $N8ea61350
  Viewer {
   input_process false
   name Viewer1
@@ -219,7 +223,7 @@ Group {
   xpos -108
   ypos -201
  }
-set N1cdc0560 [stack 0]
+set N42c52e70 [stack 0]
  Shuffle {
   in normal
   in2 alpha
@@ -280,7 +284,7 @@ set N1cdc0560 [stack 0]
   xpos -108
   ypos 180
  }
-set N1e2084f0 [stack 0]
+set N5c58fcc0 [stack 0]
  Expression {
   expr0 r/(parent.int*4)
   expr1 g/(parent.int*4)
@@ -289,13 +293,13 @@ set N1e2084f0 [stack 0]
   xpos -142
   ypos 227
  }
-set N1e20bf30 [stack 0]
+set N8e928f70 [stack 0]
  Dot {
   name Dot14
   xpos 644
   ypos 230
  }
-set N1e216310 [stack 0]
+set N8e94ead0 [stack 0]
  Dot {
   name Dot12
   xpos 878
@@ -306,7 +310,7 @@ set N1e216310 [stack 0]
   xpos 878
   ypos 740
  }
-push $N1cdc0560
+push $N42c52e70
  Dot {
   name Dot9
   xpos 198
@@ -317,7 +321,7 @@ push $N1cdc0560
   xpos 198
   ypos 324
  }
-set N1e224ba0 [stack 0]
+set N263a59b0 [stack 0]
  Unpremult {
   name Unpremult1
   xpos 164
@@ -328,19 +332,19 @@ set N1e224ba0 [stack 0]
   xpos 198
   ypos 440
  }
-set N1e22e7d0 [stack 0]
+set N1b3f3aa0 [stack 0]
  Dot {
   name Dot15
   xpos 321
   ypos 440
  }
-set N1e232280 [stack 0]
+set N5c56f8f0 [stack 0]
  Dot {
   name Dot13
   xpos 567
   ypos 440
  }
-set N1e235cb0 [stack 0]
+set N1b0eed00 [stack 0]
  Dot {
   name Dot10
   xpos 802
@@ -364,13 +368,13 @@ set N1e235cb0 [stack 0]
   xpos 802
   ypos 925
  }
-push $N1e216310
+push $N8e94ead0
  Dot {
   name Dot20
   xpos 644
   ypos 727
  }
-push $N1e235cb0
+push $N1b0eed00
  Merge2 {
   inputs 2
   operation plus
@@ -389,7 +393,7 @@ push $N1e235cb0
   xpos 567
   ypos 933
  }
-push $N1e2084f0
+push $N5c58fcc0
  Dot {
   name Dot17
   xpos 455
@@ -400,7 +404,7 @@ push $N1e2084f0
   xpos 455
   ypos 590
  }
-push $N1e232280
+push $N5c56f8f0
  Grade {
   multiply 0.185
   name Grade3
@@ -433,7 +437,7 @@ push $N1e232280
   xpos 321
   ypos 711
  }
-push $N1e22e7d0
+push $N1b3f3aa0
  Merge2 {
   inputs 2
   operation plus
@@ -447,8 +451,8 @@ push $N1e22e7d0
   xpos 170
   ypos 752
  }
-push $N1e224ba0
-push $N1e20bf30
+push $N263a59b0
+push $N8e928f70
  Multiply {
   inputs 1+1
   value 0
@@ -477,7 +481,6 @@ push $N1e20bf30
 end_group
 Group {
  name XtraLight2
- selected true
  xpos -63
  ypos 87
  addUserKnob {20 xtraLight l XtraLight}
@@ -507,7 +510,7 @@ Group {
  preadd 0.001
  addUserKnob {20 endGroup_2 l endGroup n -1}
  addUserKnob {26 ""}
- addUserKnob {26 t1 l "" +STARTLINE T "v0.1 2013 by jonas@mischlicht.com"}
+ addUserKnob {26 t1 l "" +STARTLINE T "v0.1 2013 by joans@mischlicht.com"}
 }
  Input {
   inputs 0
@@ -520,7 +523,7 @@ Group {
   xpos -108
   ypos -201
  }
-set N1e41d7d0 [stack 0]
+set N5f6058a0 [stack 0]
  Shuffle {
   in normal
   in2 alpha
@@ -581,7 +584,7 @@ set N1e41d7d0 [stack 0]
   xpos -108
   ypos 180
  }
-set N1e4612f0 [stack 0]
+set N3a271180 [stack 0]
  Expression {
   expr0 r/(parent.int*4)
   expr1 g/(parent.int*4)
@@ -590,13 +593,13 @@ set N1e4612f0 [stack 0]
   xpos -142
   ypos 227
  }
-set N1e464d30 [stack 0]
+set N3a28a570 [stack 0]
  Dot {
   name Dot14
   xpos 644
   ypos 230
  }
-set N1e46f110 [stack 0]
+set N3a26e4a0 [stack 0]
  Dot {
   name Dot12
   xpos 878
@@ -607,7 +610,7 @@ set N1e46f110 [stack 0]
   xpos 878
   ypos 740
  }
-push $N1e41d7d0
+push $N5f6058a0
  Dot {
   name Dot9
   xpos 198
@@ -618,7 +621,7 @@ push $N1e41d7d0
   xpos 198
   ypos 324
  }
-set N1e47d9a0 [stack 0]
+set N8ea2fcd0 [stack 0]
  Unpremult {
   name Unpremult1
   xpos 164
@@ -629,19 +632,19 @@ set N1e47d9a0 [stack 0]
   xpos 198
   ypos 440
  }
-set N1e487130 [stack 0]
+set N3a20fb60 [stack 0]
  Dot {
   name Dot15
   xpos 321
   ypos 440
  }
-set N1e48abe0 [stack 0]
+set N3a2ac700 [stack 0]
  Dot {
   name Dot13
   xpos 567
   ypos 440
  }
-set N1e48e610 [stack 0]
+set N3a237fc0 [stack 0]
  Dot {
   name Dot10
   xpos 802
@@ -665,13 +668,13 @@ set N1e48e610 [stack 0]
   xpos 802
   ypos 925
  }
-push $N1e46f110
+push $N3a26e4a0
  Dot {
   name Dot20
   xpos 644
   ypos 727
  }
-push $N1e48e610
+push $N3a237fc0
  Merge2 {
   inputs 2
   operation plus
@@ -690,7 +693,7 @@ push $N1e48e610
   xpos 567
   ypos 933
  }
-push $N1e4612f0
+push $N3a271180
  Dot {
   name Dot17
   xpos 455
@@ -701,7 +704,7 @@ push $N1e4612f0
   xpos 455
   ypos 590
  }
-push $N1e48abe0
+push $N3a2ac700
  Add {
   value {{parent.preadd}}
   name Add1
@@ -727,7 +730,7 @@ push $N1e48abe0
   xpos 321
   ypos 711
  }
-push $N1e487130
+push $N3a20fb60
  Merge2 {
   inputs 2
   operation plus
@@ -741,8 +744,8 @@ push $N1e487130
   xpos 170
   ypos 752
  }
-push $N1e47d9a0
-push $N1e464d30
+push $N8ea2fcd0
+push $N3a28a570
  Multiply {
   inputs 1+1
   value 0
@@ -771,10 +774,12 @@ push $N1e464d30
  }
 end_group
 Viewer {
+ frame 1001
  frame_range 1001-1044
  frame_range_lock true
  input_process false
  name Viewer1
+ selected true
  xpos -627
  ypos 76
 }

@@ -10,18 +10,17 @@ def saveFrame(filePath = ""):
     if inputNode != None:
         selInput = nuke.Node.input(viewNode, inputNode)
 
-        if filePath = "":
+        if filePath == "":
             filePath = nuke.getFilename('Save File', "*.png *.jpg *.tga *.exr *.dpx", type = 'save')
         
-
+        filePath = os.path.normpath(filePath)
 
         if filePath != None:
 
             #Check Path
             path, ext = os.path.split(filePath)
             if not os.path.isdir(path):
-                pass
-                ### TODO: Build Path            
+                os.makedirs(path)          
 
 
             write = nuke.nodes.Write(file = filePath, name = 'WriteSaveThisFrame', file_type=ext)
@@ -29,6 +28,7 @@ def saveFrame(filePath = ""):
             curFrame = int(nuke.knob("frame"))
             nuke.execute(write.name(), curFrame, curFrame)
             nuke.delete(write)
+            print "saved: " + filePath
 
     else:
         nuke.message("This viewer don't have any input connected!")
@@ -41,20 +41,27 @@ def getSeqName():
 
 
 def getNextRefFrame():
-    ret = "rf01"
+    return "rf01"
+    
 
 
-def getRefFramePath():
+def getSeqRefFramePath():
     res = ""
 
-    res = " /Users/jonas/Desktop/test1.ext"
+    res = os.path.join("O:/projects/130226_pin_film/production/comp/nuke/output/", getSeqName(), "_seqRefs")
 
     return res
 
 
 
 def saveRefFrame():
-    refPath = getRefFramePath()
+    refPath = getSeqRefFramePath()
     seqName = getSeqName()
+    nextRefFrame = getNextRefFrame()
 
-    saveFrame(os.path.join(getRefFramePath(), getSeqName(), getSeqName() + "_" + getNextRefFrame() + ".exr" ))
+
+    saveFrame(os.path.join(refPath, seqName + "_" + nextRefFrame + ".exr" ))
+    
+    
+    
+saveRefFrame()

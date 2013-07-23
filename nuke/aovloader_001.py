@@ -49,15 +49,15 @@ def getNodeList():
             rnd['fn'] = os.path.split(fpn)[1]
             
             fileData = rnd['fn'].split('_')
-            rnd['display_name'] = "%s_%s_%s_%s_%s_%s" % (fileData[1], fileData[2], fileData[3], fileData[4], fileData[5], fileData[-1][0:-9])
+            rnd['display_name'] = "Displayname" # "%s_%s_%s_%s_%s_%s" % (fileData[1], fileData[2], fileData[3], fileData[4], fileData[5], fileData[-1][0:-9])
             
             # get base and ext for AOV
             rnd['base_fn'] = rnd['fn'].split('.')[0]
             rnd['ext'] = rnd['fn'].split('.')[-1]
             
             # first and last frame of beauty
-            rnd['first_frame'] = '%04d' % (node['first'].value())
-            rnd['last_frame'] = '%04d' % (node['last'].value())
+            rnd['first_frame'] = '%05d' % (node['first'].value())
+            rnd['last_frame'] = '%05d' % (node['last'].value())
             
             node_info.append(rnd)  
         
@@ -70,30 +70,32 @@ def getNodeList():
 # Create AOV dict for each node 
 def getAOV(rnd):
     
-    aov_name = [ name for name in os.listdir(rnd['fd']) if os.path.isdir(os.path.join(rnd['fd'], name)) ]
+    aov_name = [ name for name in os.listdir(rnd['fd']) if os.path.isdir(os.path.normpath(os.path.join(rnd['fd'], name))) ]
     aovDict = {}
     
     for entry in aov_name:
-        aov_dir = os.path.join(rnd['fd'], entry)
+        aov_dir = os.path.normpath(os.path.join(rnd['fd'], entry))
         
         # check if entry is a folder
         if os.path.isdir(aov_dir) == True:
-            print 'AOV LOADER: Directory: %s' % (aov_dir)
+            #print 'AOV LOADER: Directory: %s' % (aov_dir)
             
             # create AOV fpn
-            aov_file = rnd['base_fn'] + '.' + entry + '.%04d.' + rnd['ext']
-            aov_fpn = os.path.join(aov_dir, aov_file)
+            aov_file = rnd['base_fn'] + '.' + entry + '.%05d.' + rnd['ext']
+            aov_fpn = os.path.normpath(os.path.join(aov_dir, aov_file))
                     
             # check if AOV file exists and if add to list - creating checkAovFpn with file number in order to check file
-            checkAovFpn = aov_fpn.replace('.%04d.', '.'+ rnd['first_frame']+'.')
+            checkAovFpn = aov_fpn.replace('.%05d.', '.'+ rnd['first_frame']+'.')
             print checkAovFpn
             if os.path.exists(checkAovFpn):
-                        
+                print 'AOV LOADERR: checkAovFpn found: %s' % (checkAovFpn)
                 # if file sequence is only one frame use fpn with frame number
                 if (int(rnd['last_frame'])-int(rnd['first_frame'])) <= 1:
                     aov_fpn = checkAovFpn
-                        
+                
+                print aov_fpn
                 aov_fpn = aov_fpn.replace('\\','/')
+                
                 aovDict[entry] = aov_fpn
     
     print 'AOV LOADER: AOVs found for %s:' % (rnd['fn'])
@@ -416,3 +418,4 @@ def loadAOV():
             nuke.message('No AOVs found in Folder '+rnd['fd']+' for Node '+rnd['node_name'])
             return
 
+loadAOV()

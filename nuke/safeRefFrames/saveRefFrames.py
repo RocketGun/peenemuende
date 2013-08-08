@@ -14,8 +14,7 @@ def saveFrame(filePath = ""):
 		if filePath = "":
 			filePath = nuke.getFilename('Save File', "*.png *.jpg *.tga *.exr *.dpx", type = 'save')
 		
-
-
+		
 		if filePath != None:
 
 			#Check Path
@@ -33,8 +32,6 @@ def saveFrame(filePath = ""):
 
 	else:
 		nuke.message("This viewer don't have any input connected!")
-
-def get
 
 
 def getRefFramePath():
